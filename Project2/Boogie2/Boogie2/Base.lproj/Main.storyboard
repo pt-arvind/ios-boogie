@@ -16,13 +16,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZqO-28-h83" userLabel="Color View">
-                                <rect key="frame" x="156" y="49" width="288" height="235"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZqO-28-h83" userLabel="Color View">
+                                <rect key="frame" x="215" y="231" width="171" height="138"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9g5-zI-v6F">
+                                <rect key="frame" x="253" y="424" width="95" height="30"/>
+                                <state key="normal" title="Change Color">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="randomColor" destination="BYZ-38-t0r" eventType="touchUpInside" id="QOh-8c-hQu"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="ZqO-28-h83" secondAttribute="centerY" id="0B5-jW-AO5"/>
+                            <constraint firstItem="ZqO-28-h83" firstAttribute="bottom" secondItem="9g5-zI-v6F" secondAttribute="top" constant="-55" id="3zj-Oh-xuw"/>
+                            <constraint firstItem="9g5-zI-v6F" firstAttribute="centerX" secondItem="ZqO-28-h83" secondAttribute="centerX" id="GHI-bU-Mtt"/>
+                            <constraint firstAttribute="centerX" secondItem="ZqO-28-h83" secondAttribute="centerX" id="XmU-0j-jEU"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="button" destination="9g5-zI-v6F" id="5Xp-cD-SOC"/>
+                        <outlet property="colorView" destination="ZqO-28-h83" id="pdg-Re-vfq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

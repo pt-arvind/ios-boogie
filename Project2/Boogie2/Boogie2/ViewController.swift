@@ -9,10 +9,11 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    @IBOutlet var colorView: UIView!
+    @IBOutlet var button: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,5 +22,17 @@ class ViewController: UIViewController {
     }
 
 
+    @IBAction func randomColor() {
+        let red = CGFloat(arc4random()%256)/256.0
+        let green = CGFloat(arc4random()%256)/256.0
+        let blue = CGFloat(arc4random()%256)/256.0
+        
+        let color = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+        println(color)
+        
+        colorView.backgroundColor = color
+    }
+    
+    
 }
 
