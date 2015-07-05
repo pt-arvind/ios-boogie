@@ -8,15 +8,21 @@
 
 import UIKit
 import STTwitter
+import AVFoundation
 
 class ViewController : UITableViewController {
+    private var tweets = [Tweet]()
+    private var speechSynthesizer = AVSpeechSynthesizer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // In order to use this, go into Settings on your iPhone (or simulator) and set up a twitter account of any kind. If you don't have a twitter account, make one.
         var API = STTwitterAPI.twitterAPIOSWithFirstAccount()
-        API.verifyCredentialsWithUserSuccessBlock({ (username, userID) -> Void in
-            API.getHomeTimelineSinceID(nil, count: 20, successBlock: { (statuses) -> Void in
-                
+        API.verifyCredentialsWithUserSuccessBlock({[weak self] (username, userID) -> Void in
+            API.getUserTimelineWithScreenName("arteezy", count: 20, successBlock: { (statuses) -> Void in
+                var tweetDicts = statuses as! [NSDictionary]
+                self?.tweets = TweetParser.parseTweets(tweetDicts)
+                self?.tableView.reloadData()
             }, errorBlock: { (error) -> Void in
                 println(error)
             })
@@ -33,13 +39,17 @@ class ViewController : UITableViewController {
 
 extension ViewController : UITableViewDelegate {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
+        let tweet = tweets[indexPath.row]
+        let utterance = AVSpeechUtterance(string: tweet.message)
+        speechSynthesizer.speakUtterance(utterance)
     }
 }
 
 extension ViewController : UITableViewDataSource {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return tweets.count
     }
 
     
@@ -51,8 +61,13 @@ extension ViewController : UITableViewDataSource {
         if cell != nil {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: cellReuseID)
         }
+        let cellToDecorate = cell!
+        let tweet = tweets[indexPath.row]
         
-        return cell!
+        cellToDecorate.textLabel?.text = tweet.message
+        cellToDecorate.detailTextLabel?.text = tweet.author
+        
+        return cellToDecorate
     }
 
 }
